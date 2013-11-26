@@ -184,9 +184,14 @@
     self.willSendImage = [info objectForKey:UIImagePickerControllerEditedImage];
     [self.messageArray addObject:[NSDictionary dictionaryWithObject:self.willSendImage forKey:@"Image"]];
     [self.timestamps addObject:[NSDate date]];
-    [self.tableView reloadData];
-    [self scrollToBottomAnimated:YES];
     
+//    [self.tableView reloadData];
+    NSInteger rows = [self.tableView numberOfRowsInSection:0];
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:rows inSection:0]] withRowAnimation:UITableViewRowAnimationBottom];
+    [self.tableView endUpdates];
+    
+    [self scrollToBottomAnimated:YES];
 	
     [self dismissViewControllerAnimated:YES completion:NULL];
     
