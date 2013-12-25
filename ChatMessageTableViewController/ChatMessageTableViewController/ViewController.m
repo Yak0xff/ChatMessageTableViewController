@@ -11,7 +11,7 @@
 
 
 
-@interface ViewController () <JSMessagesViewDelegate, JSMessagesViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ViewController () <JSMessagesViewDelegate, JSMessagesViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSMutableArray *messageArray;
 @property (nonatomic,strong) UIImage *willSendImage;
@@ -28,14 +28,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+     self.title = @"ChatMessage";
+    
     self.delegate = self;
     self.dataSource = self;
     
-    self.title = @"ChatMessage";
-    
     self.messageArray = [NSMutableArray array];
     self.timestamps = [NSMutableArray array];
-     
+      
 }
 
 
@@ -62,10 +63,28 @@
 }
 
 - (void)cameraPressed:(id)sender{
+    
+    [self.inputToolBarView.textView resignFirstResponder];
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"相册", nil];
+    [actionSheet showInView:self.view];
+}
+
+#pragma mark -- UIActionSheet Delegate
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    switch (buttonIndex) {
+        case 0:
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            break;
+        case 1:
+            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            break;
+    }
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
@@ -185,16 +204,16 @@
     [self.messageArray addObject:[NSDictionary dictionaryWithObject:self.willSendImage forKey:@"Image"]];
     [self.timestamps addObject:[NSDate date]];
     
-//    [self.tableView reloadData];
     NSInteger rows = [self.tableView numberOfRowsInSection:0];
     [self.tableView beginUpdates];
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:rows inSection:0]] withRowAnimation:UITableViewRowAnimationBottom];
-    [self.tableView endUpdates];
+    [self.tableView endUpdates]; 
+    
+    [JSMessageSoundEffect playMessageSentSound];
     
     [self scrollToBottomAnimated:YES];
 	
     [self dismissViewControllerAnimated:YES completion:NULL];
-    
 }
 
 
@@ -202,7 +221,7 @@
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
     
-}
+} 
 
 
 @end

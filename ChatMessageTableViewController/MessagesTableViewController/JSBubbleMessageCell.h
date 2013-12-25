@@ -45,6 +45,11 @@ typedef enum {
 
 @interface JSBubbleMessageCell : UITableViewCell
 
+
+@property (nonatomic, assign) BOOL isSelected;
+@property (nonatomic, readonly, strong) UIImageView *imageView;
+@property (nonatomic, readonly, strong) UIImage *renderedMark;
+
 #pragma mark - Initialization
 - (id)initWithBubbleType:(JSBubbleMessageType)type
              bubbleStyle:(JSBubbleMessageStyle)bubbleStyle

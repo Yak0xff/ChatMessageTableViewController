@@ -94,10 +94,13 @@ typedef enum {
 
 @property (weak, nonatomic) id<JSMessagesViewDelegate> delegate;
 @property (weak, nonatomic) id<JSMessagesViewDataSource> dataSource;
+
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) JSMessageInputView *inputToolBarView;
 @property (assign, nonatomic) CGFloat previousTextViewContentHeight;
 @property (assign, nonatomic, readonly) UIEdgeInsets originalTableViewContentInset;
+
+@property (nonatomic,strong) NSMutableArray *selectedMarks;
 
 #pragma mark - Initialization
 - (UIButton *)sendButton;

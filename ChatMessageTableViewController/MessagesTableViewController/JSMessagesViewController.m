@@ -61,11 +61,11 @@
     
     CGSize size = self.view.frame.size;
 	
-    CGRect tableFrame = CGRectMake(0.0f, 40.0f, size.width, size.height - 40 - INPUT_HEIGHT);
+    CGRect tableFrame = CGRectMake(0.0f, 0.0f, size.width, size.height - INPUT_HEIGHT);
 	self.tableView = [[UITableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
 	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	self.tableView.dataSource = self;
-	self.tableView.delegate = self;
+	self.tableView.delegate = self; 
 	[self.view addSubview:self.tableView]; 
 	
 	UIButton* mediaButton = nil;
@@ -122,6 +122,9 @@
 		self.inputToolBarView.textView.frame = frame;
 	}
 	
+    
+    self.selectedMarks = [NSMutableArray new];
+    
     [self setBackgroundColor:[UIColor messagesBackgroundColor]];
 }
 
@@ -263,8 +266,30 @@
     
     [cell setMessage:[self.dataSource textForRowAtIndexPath:indexPath]];
     [cell setBackgroundColor:tableView.backgroundColor];
+    
+    
+    cell.isSelected = [self.selectedMarks containsObject:CellID] ? YES : NO;
+    
     return cell;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    JSBubbleMessageType type = [self.delegate messageTypeForRowAtIndexPath:indexPath];
+    JSBubbleMessageStyle bubbleStyle = [self.delegate messageStyleForRowAtIndexPath:indexPath];
+    
+    BOOL hasTimestamp = [self shouldHaveTimestampForRowAtIndexPath:indexPath];
+    BOOL hasAvatar = [self shouldHaveAvatarForRowAtIndexPath:indexPath];
+    
+    NSString *CellID = [NSString stringWithFormat:@"MessageCell_%d_%d_%d_%d", type, bubbleStyle, hasTimestamp, hasAvatar];
+    
+    if ([self.selectedMarks containsObject:CellID])// Is selected?
+        [self.selectedMarks removeObject:CellID];
+    else
+        [self.selectedMarks addObject:CellID];
+    
+    [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
 
 #pragma mark - Table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
