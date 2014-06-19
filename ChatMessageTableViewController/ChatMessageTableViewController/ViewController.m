@@ -180,6 +180,26 @@
     return [UIImage imageNamed:@"demo-avatar-jobs"];
 }
 
+- (SEL)avatarImageForIncomingMessageAction
+{
+    return @selector(onInComingAvatarImageClick);
+}
+
+- (void)onInComingAvatarImageClick
+{
+    NSLog(@"__%s__",__func__);
+}
+
+- (SEL)avatarImageForOutgoingMessageAction
+{
+    return @selector(onOutgoingAvatarImageClick);
+}
+
+- (void)onOutgoingAvatarImageClick
+{
+    NSLog(@"__%s__",__func__);
+}
+
 - (UIImage *)avatarImageForOutgoingMessage
 {
     return [UIImage imageNamed:@"demo-avatar-woz"];

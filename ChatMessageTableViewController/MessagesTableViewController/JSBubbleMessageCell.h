@@ -63,6 +63,7 @@ typedef enum {
 - (void)setMedia:(id)data;
 - (void)setTimestamp:(NSDate *)date;
 - (void)setAvatarImage:(UIImage *)image;
+- (void)setAvatarImageTarget:(id)target action:(SEL)action;
 
 + (CGFloat)neededHeightForText:(NSString *)bubbleViewText
                      timestamp:(BOOL)hasTimestamp
