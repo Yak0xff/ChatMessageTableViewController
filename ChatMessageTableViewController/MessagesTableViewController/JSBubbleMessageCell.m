@@ -241,6 +241,13 @@
     self.avatarImageView.image = styledImg;
 }
 
+- (void)setAvatarImageTarget:(id)target action:(SEL)action
+{
+    self.avatarImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *actionTap = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
+    [self.avatarImageView addGestureRecognizer:actionTap];
+}
+
 + (CGFloat)neededHeightForText:(NSString *)bubbleViewText timestamp:(BOOL)hasTimestamp avatar:(BOOL)hasAvatar
 {
     CGFloat timestampHeight = (hasTimestamp) ? TIMESTAMP_LABEL_HEIGHT : 0.0f;

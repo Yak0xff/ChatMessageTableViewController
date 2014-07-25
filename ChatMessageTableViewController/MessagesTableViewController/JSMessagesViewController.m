@@ -39,6 +39,8 @@
 #import "UIColor+JSMessagesView.h"
 #import "JSDismissiveTextView.h"
 
+#define OSVersionIsAtLeastiOS7  (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+
 #define INPUT_HEIGHT 46.0f
 
 @interface JSMessagesViewController () <JSDismissiveTextViewDelegate>
@@ -47,9 +49,27 @@
 
 @end
 
-
-
 @implementation JSMessagesViewController
+
+- (void)loadView
+{
+    [super loadView];
+    [self fixFrame];
+}
+
+- (void)fixFrame
+{
+    CGRect frame = [UIScreen mainScreen].bounds;
+    if (OSVersionIsAtLeastiOS7 == YES) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }else{
+        frame.size.height -= 20 + 44;
+    }
+    
+    self.view.frame = frame;
+    self.view.bounds = frame;
+}
+
 
 #pragma mark - Initialization
 - (void)setup
@@ -253,10 +273,12 @@
         switch (type) {
             case JSBubbleMessageTypeIncoming:
                 [cell setAvatarImage:[self.dataSource avatarImageForIncomingMessage]];
+                [cell setAvatarImageTarget:self.dataSource action:[self.dataSource avatarImageForIncomingMessageAction]];
                 break;
                 
             case JSBubbleMessageTypeOutgoing:
                 [cell setAvatarImage:[self.dataSource avatarImageForOutgoingMessage]];
+                [cell setAvatarImageTarget:self.dataSource action:[self.dataSource avatarImageForOutgoingMessageAction]];
                 break;
         }
     }
