@@ -217,7 +217,7 @@
 - (void)setTimestamp:(NSDate *)date
 {
     self.timestampLabel.text = [NSDateFormatter localizedStringFromDate:date
-                                                              dateStyle:kCFDateFormatterMediumStyle
+                                                              dateStyle:NSDateFormatterMediumStyle
                                                               timeStyle:NSDateFormatterShortStyle];
 }
 

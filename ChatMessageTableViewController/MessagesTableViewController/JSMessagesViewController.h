@@ -113,7 +113,7 @@ typedef enum {
 #pragma mark - Messages view controller
 - (BOOL)shouldHaveTimestampForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (BOOL)shouldHaveAvatarForRowAtIndexPath:(NSIndexPath *)indexPath;
-- (void)finishSend;
+- (void)finishSend:(BOOL)isMedia;
 - (void)setBackgroundColor:(UIColor *)color;
 - (void)scrollToBottomAnimated:(BOOL)animated;
 

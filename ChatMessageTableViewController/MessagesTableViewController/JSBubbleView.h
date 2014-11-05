@@ -37,15 +37,15 @@
 
 extern CGFloat const kJSAvatarSize;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, JSBubbleMessageType) {
     JSBubbleMessageTypeIncoming = 0,
     JSBubbleMessageTypeOutgoing
-} JSBubbleMessageType;
+} ;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, JSBubbleMediaType) {
     JSBubbleMediaTypeText = 0,
     JSBubbleMediaTypeImage,
-}JSBubbleMediaType;
+};
 
 typedef enum {
     JSBubbleMessageStyleDefault = 0,

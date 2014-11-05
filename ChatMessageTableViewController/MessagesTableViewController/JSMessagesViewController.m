@@ -256,7 +256,10 @@
     BOOL hasTimestamp = [self shouldHaveTimestampForRowAtIndexPath:indexPath];
     BOOL hasAvatar = [self shouldHaveAvatarForRowAtIndexPath:indexPath];
     
-    NSString *CellID = [NSString stringWithFormat:@"MessageCell_%d_%d_%d_%d", type, bubbleStyle, hasTimestamp, hasAvatar];
+    NSInteger row = indexPath.row;
+    
+    NSString *CellID = [NSString stringWithFormat:@"MessageCell_%ld_%d_%d_%d_%ld", type, bubbleStyle, hasTimestamp, hasAvatar, (long)row]; 
+    
     JSBubbleMessageCell *cell = (JSBubbleMessageCell *)[tableView dequeueReusableCellWithIdentifier:CellID];
     
     if(!cell)
@@ -289,7 +292,6 @@
     [cell setMessage:[self.dataSource textForRowAtIndexPath:indexPath]];
     [cell setBackgroundColor:tableView.backgroundColor];
     
-    
     cell.isSelected = [self.selectedMarks containsObject:CellID] ? YES : NO;
     
     return cell;
@@ -301,8 +303,9 @@
     
     BOOL hasTimestamp = [self shouldHaveTimestampForRowAtIndexPath:indexPath];
     BOOL hasAvatar = [self shouldHaveAvatarForRowAtIndexPath:indexPath];
+    NSInteger row = indexPath.row;
     
-    NSString *CellID = [NSString stringWithFormat:@"MessageCell_%d_%d_%d_%d", type, bubbleStyle, hasTimestamp, hasAvatar];
+    NSString *CellID = [NSString stringWithFormat:@"MessageCell_%ld_%d_%d_%d_%ld", type, bubbleStyle, hasTimestamp, hasAvatar, (long)row];
     
     if ([self.selectedMarks containsObject:CellID])// Is selected?
         [self.selectedMarks removeObject:CellID];
@@ -367,10 +370,12 @@
     }
 }
 
-- (void)finishSend
+- (void)finishSend:(BOOL)isMedia
 {
-    [self.inputToolBarView.textView setText:nil];
-    [self textViewDidChange:self.inputToolBarView.textView];
+    if (!isMedia) {
+        [self.inputToolBarView.textView setText:nil];
+        [self textViewDidChange:self.inputToolBarView.textView];
+    }
     [self.tableView reloadData];
     [self scrollToBottomAnimated:YES];
 }

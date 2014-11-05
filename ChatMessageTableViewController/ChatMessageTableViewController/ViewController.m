@@ -1,21 +1,13 @@
-//
-//  ViewController.m
-//  ChatMessageTableViewController
-//
-//  Created by Yongchao on 21/11/13.
-//  Copyright (c) 2013 Yongchao. All rights reserved.
-//
+
 
 #import "ViewController.h"
-
-
+#import "MessageData.h"
 
 
 @interface ViewController () <JSMessagesViewDelegate, JSMessagesViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSMutableArray *messageArray;
 @property (nonatomic,strong) UIImage *willSendImage;
-@property (strong, nonatomic) NSMutableArray *timestamps;
 
 @end
 
@@ -35,8 +27,22 @@
     self.dataSource = self;
     
     self.messageArray = [NSMutableArray array];
-    self.timestamps = [NSMutableArray array];
-      
+    
+    [self testData];
+}
+
+- (void)testData{
+    MessageData *message1 = [[MessageData alloc] initWithMsgId:@"0001" text:@"This is a Chat Demo like iMessage.app" date:[NSDate date] msgType:JSBubbleMessageTypeIncoming mediaType:JSBubbleMediaTypeText img:nil];
+    
+    [self.messageArray addObject:message1];
+    
+    MessageData *message2 = [[MessageData alloc] initWithMsgId:@"0002" text:nil date:[NSDate date] msgType:JSBubbleMessageTypeOutgoing mediaType:JSBubbleMediaTypeImage img:@"demo1.jpg"];
+    
+    [self.messageArray addObject:message2];
+    
+    MessageData *message3 = [[MessageData alloc] initWithMsgId:@"0003" text:@"Up-to-date for iOS 6.0 and ARC (iOS 5.0+ required) Universal for iPhone Allows arbitrary message (and bubble) sizes Copy & paste text message && Save image message " date:[NSDate date] msgType:JSBubbleMessageTypeOutgoing mediaType:JSBubbleMediaTypeText img:nil];
+    
+    [self.messageArray addObject:message3];
 }
 
 
@@ -50,16 +56,23 @@
 #pragma mark - Messages view delegate
 - (void)sendPressed:(UIButton *)sender withText:(NSString *)text
 {
-    [self.messageArray addObject:[NSDictionary dictionaryWithObject:text forKey:@"Text"]];
+    int value = arc4random() % 1000;
+    NSString *msgId = [NSString stringWithFormat:@"%d",value];
     
-    [self.timestamps addObject:[NSDate date]];
-    
-    if((self.messageArray.count - 1) % 2)
+    JSBubbleMessageType msgType;
+    if((self.messageArray.count - 1) % 2){
+        msgType = JSBubbleMessageTypeOutgoing;
         [JSMessageSoundEffect playMessageSentSound];
-    else
+    }else{
+        msgType = JSBubbleMessageTypeIncoming;
         [JSMessageSoundEffect playMessageReceivedSound];
+    }
     
-    [self finishSend];
+    MessageData *message = [[MessageData alloc] initWithMsgId:msgId text:text date:[NSDate date] msgType:msgType mediaType:JSBubbleMediaTypeText img:nil];
+    
+    [self.messageArray addObject:message];
+    
+    [self finishSend:NO];
 }
 
 - (void)cameraPressed:(id)sender{
@@ -72,25 +85,35 @@
 
 #pragma mark -- UIActionSheet Delegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    
     switch (buttonIndex) {
         case 0:
-            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            break;
-        case 1:
-            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        case 1:{
+            int value = arc4random() % 1000;
+            NSString *msgId = [NSString stringWithFormat:@"%d",value];
+            
+            JSBubbleMessageType msgType;
+            if((self.messageArray.count - 1) % 2){
+                msgType = JSBubbleMessageTypeOutgoing;
+                [JSMessageSoundEffect playMessageSentSound];
+            }else{
+                msgType = JSBubbleMessageTypeIncoming;
+                [JSMessageSoundEffect playMessageReceivedSound];
+            }
+            
+            MessageData *message = [[MessageData alloc] initWithMsgId:msgId text:nil date:[NSDate date] msgType:msgType mediaType:JSBubbleMediaTypeImage img:@"demo1.jpg"];
+            
+            [self.messageArray addObject:message];
+            
+            [self finishSend:YES];
+        }
             break;
     }
-    [self presentViewController:picker animated:YES completion:NULL];
 }
 
 - (JSBubbleMessageType)messageTypeForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (indexPath.row % 2) ? JSBubbleMessageTypeIncoming : JSBubbleMessageTypeOutgoing;
+    MessageData *message = self.messageArray[indexPath.row];
+    return message.messageType;
 }
 
 - (JSBubbleMessageStyle)messageStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -99,13 +122,9 @@
 }
 
 - (JSBubbleMediaType)messageMediaTypeForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if([[self.messageArray objectAtIndex:indexPath.row] objectForKey:@"Text"]){
-        return JSBubbleMediaTypeText;
-    }else if ([[self.messageArray objectAtIndex:indexPath.row] objectForKey:@"Image"]){
-        return JSBubbleMediaTypeImage;
-    }
     
-    return -1;
+    MessageData *message = self.messageArray[indexPath.row];
+    return message.mediaType;
 }
 
 - (UIButton *)sendButton
@@ -164,15 +183,15 @@
 #pragma mark - Messages view data source
 - (NSString *)textForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([[self.messageArray objectAtIndex:indexPath.row] objectForKey:@"Text"]){
-        return [[self.messageArray objectAtIndex:indexPath.row] objectForKey:@"Text"];
-    }
-    return nil;
+    
+    MessageData *message = self.messageArray[indexPath.row];
+    return message.text;
 }
 
 - (NSDate *)timestampForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.timestamps objectAtIndex:indexPath.row];
+    MessageData *message = self.messageArray[indexPath.row];
+    return message.date;
 }
 
 - (UIImage *)avatarImageForIncomingMessage
@@ -206,42 +225,11 @@
 }
 
 - (id)dataForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if([[self.messageArray objectAtIndex:indexPath.row] objectForKey:@"Image"]){
-        return [[self.messageArray objectAtIndex:indexPath.row] objectForKey:@"Image"];
-    }
-    return nil;
     
+    MessageData *message = self.messageArray[indexPath.row];
+    return [UIImage imageNamed:message.img];
 }
 
-#pragma UIImagePicker Delegate
-
-#pragma mark - Image picker delegate
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-	NSLog(@"Chose image!  Details:  %@", info);
-    
-    self.willSendImage = [info objectForKey:UIImagePickerControllerEditedImage];
-    [self.messageArray addObject:[NSDictionary dictionaryWithObject:self.willSendImage forKey:@"Image"]];
-    [self.timestamps addObject:[NSDate date]];
-    
-    NSInteger rows = [self.tableView numberOfRowsInSection:0];
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:rows inSection:0]] withRowAnimation:UITableViewRowAnimationBottom];
-    [self.tableView endUpdates]; 
-    
-    [JSMessageSoundEffect playMessageSentSound];
-    
-    [self scrollToBottomAnimated:YES];
-	
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
-    
-} 
 
 
 @end

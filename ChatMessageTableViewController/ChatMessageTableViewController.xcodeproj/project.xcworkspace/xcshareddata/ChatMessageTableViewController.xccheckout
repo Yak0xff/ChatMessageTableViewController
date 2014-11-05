@@ -10,29 +10,29 @@
 	<string>ChatMessageTableViewController</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>6ED7BA44-F9CC-43AE-849B-ABFB01864724</key>
-		<string>ssh://github.com/OpeningO/ChatMessageTableViewController.git</string>
+		<key>3E237930A87568B09C3836C8ED5882D77B38E129</key>
+		<string>github.com:EvoRobin/ChatMessageTableViewController.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ChatMessageTableViewController/ChatMessageTableViewController.xcodeproj/project.xcworkspace</string>
+	<string>ChatMessageTableViewController/ChatMessageTableViewController.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>6ED7BA44-F9CC-43AE-849B-ABFB01864724</key>
+		<key>3E237930A87568B09C3836C8ED5882D77B38E129</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/OpeningO/ChatMessageTableViewController.git</string>
+	<string>github.com:EvoRobin/ChatMessageTableViewController.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>6ED7BA44-F9CC-43AE-849B-ABFB01864724</string>
+	<string>3E237930A87568B09C3836C8ED5882D77B38E129</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>6ED7BA44-F9CC-43AE-849B-ABFB01864724</string>
+			<string>3E237930A87568B09C3836C8ED5882D77B38E129</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ChatMessageTableViewController</string>
 		</dict>
