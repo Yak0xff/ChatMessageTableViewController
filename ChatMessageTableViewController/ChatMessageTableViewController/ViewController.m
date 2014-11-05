@@ -230,6 +230,4 @@
     return [UIImage imageNamed:message.img];
 }
 
-
-
 @end

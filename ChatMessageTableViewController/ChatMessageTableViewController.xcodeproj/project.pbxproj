@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		00A721331A0A0FEE00962B23 /* MessageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A721321A0A0FEE00962B23 /* MessageData.m */; };
 		00A721351A0A126800962B23 /* demo1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00A721341A0A126800962B23 /* demo1.jpg */; };
+		00A721381A0A1BDC00962B23 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A721371A0A1BDC00962B23 /* MasterViewController.m */; };
 		AFC25398183E3468001D7263 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFC25397183E3468001D7263 /* Foundation.framework */; };
 		AFC2539A183E3468001D7263 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFC25399183E3468001D7263 /* CoreGraphics.framework */; };
 		AFC2539C183E3468001D7263 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFC2539B183E3468001D7263 /* UIKit.framework */; };
@@ -99,6 +100,8 @@
 		00A721311A0A0FEE00962B23 /* MessageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageData.h; sourceTree = "<group>"; };
 		00A721321A0A0FEE00962B23 /* MessageData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageData.m; sourceTree = "<group>"; };
 		00A721341A0A126800962B23 /* demo1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = demo1.jpg; sourceTree = "<group>"; };
+		00A721361A0A1BDC00962B23 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		00A721371A0A1BDC00962B23 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		AFC25394183E3468001D7263 /* ChatMessageTableViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatMessageTableViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFC25397183E3468001D7263 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AFC25399183E3468001D7263 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -257,6 +260,8 @@
 				AFC253A9183E3468001D7263 /* Main.storyboard */,
 				AFC253AC183E3468001D7263 /* ViewController.h */,
 				AFC253AD183E3468001D7263 /* ViewController.m */,
+				00A721361A0A1BDC00962B23 /* MasterViewController.h */,
+				00A721371A0A1BDC00962B23 /* MasterViewController.m */,
 				AFC253AF183E3468001D7263 /* Images.xcassets */,
 				00A721341A0A126800962B23 /* demo1.jpg */,
 				AFC254A9183E3744001D7263 /* demo-avatar-jobs.png */,
@@ -547,6 +552,7 @@
 				AFC25419183E3489001D7263 /* JSMessageTextView.m in Sources */,
 				AFC25448183E3489001D7263 /* UIImage+JSMessagesView.m in Sources */,
 				AFC2541A183E3489001D7263 /* NSString+JSMessagesView.m in Sources */,
+				00A721381A0A1BDC00962B23 /* MasterViewController.m in Sources */,
 				AFC253AE183E3468001D7263 /* ViewController.m in Sources */,
 				AFC25449183E3489001D7263 /* UIView+AnimationOptionsForCurve.m in Sources */,
 				00A721331A0A0FEE00962B23 /* MessageData.m in Sources */,
