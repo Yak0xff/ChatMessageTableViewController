@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>UIChatKit by RobinChao</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">UIChatKit</h1>
+      <h2 class="project-tagline">UIChatKit is like iMessage app. support text &amp;&amp; image .</h2>
+      <a href="https://github.com/RobinChao/ChatMessageTableViewController" class="btn">View on GitHub</a>
+      <a href="https://github.com/RobinChao/ChatMessageTableViewController/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/RobinChao/ChatMessageTableViewController/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p>A messages UI for iPhone. UIChatKit is like iMessage app. support text &amp;&amp; image .</p>
+
+<p><img src="https://github.com/EvoRobin/ChatMessageTableViewController/blob/master/ScreenShot/IMG_0452.PNG?raw=true" alt="Messages Screenshot 1"></p>
+
+<p><img src="https://github.com/EvoRobin/ChatMessageTableViewController/blob/master/ScreenShot/IMG_0453.PNG?raw=true" alt="Messages Screenshot 2"></p>
+
+<p>This messages tableview controller is very similar to the one in the iOS Messages app. <strong>Note, this is only a messaging UI, not a messaging app.</strong> This is intended to be used in an existing app where you have (or are developing) a messaging system and need a user interface for it.</p>
+
+<p><strong>See more <a href="https://github.com/EvoRobin/ChatMessageTableViewController/tree/master/ScreenShot">screenshots</a> in the <code>Screenshots/</code> directory. (Surprise!)</strong></p>
+
+<h2>
+<a id="about" class="anchor" href="#about" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>About</h2>
+
+<p>This is based on work by <a href="http://github.com/soffes">@soffes</a> <a href="https://github.com/soffes/ssmessagesviewcontroller">SSMessagingViewController</a>. </p>
+
+<p>I developed this to use in <a href="http://www.hemoglobe.com">Hemoglobe</a> for private messages between users.</p>
+
+<p><a href="%5Bimg4%5D">Square message bubbles</a> designed by <a href="http://www.twitter.com/michaelschultz">@michaelschultz</a>.</p>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>Up-to-date for iOS 6.0 and ARC (iOS 5.0+ required) </li>
+<li>Universal for iPhone </li>
+<li>Allows arbitrary message (and bubble) sizes</li>
+<li>Copy &amp; paste text message &amp;&amp; Save image message</li>
+<li>Timestamp options</li>
+<li>Swipe/pull down to hide keyboard</li>
+<li>Dynamically resizes input text view as you type</li>
+<li>Smooth hiding/showing keyboard animations with <code>NSNotification</code>
+</li>
+<li>Automatically enables/disables send button if text view is empty or not</li>
+<li>Smooth send animations</li>
+<li>Send/Receive sound effects</li>
+<li>Various bubble styles</li>
+</ul>
+
+<h3>
+<a id="from-source" class="anchor" href="#from-source" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>From source</h3>
+
+<ul>
+<li>Drag the <code>JSMessagesTableViewController/</code> folder to your project.</li>
+<li>Add the <code>AudioToolbox.framework</code> to your project, if you want to use the sound effects</li>
+</ul>
+
+<h2>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How To Use</h2>
+
+<h5>
+<a id="subclass-jsmessagesviewcontroller" class="anchor" href="#subclass-jsmessagesviewcontroller" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Subclass <code>JSMessagesViewController</code>
+</h5>
+
+<ul>
+<li>In <code>- (void)viewDidLoad</code>
+
+<ul>
+<li>Set your view controller as the <code>delegate</code> and <code>datasource</code>
+</li>
+<li>Set your view controller <code>title</code>
+</li>
+</ul>
+</li>
+</ul>
+
+<h5>
+<a id="implement-the-jsmessagesviewdelegate-protocol" class="anchor" href="#implement-the-jsmessagesviewdelegate-protocol" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Implement the <code>JSMessagesViewDelegate</code> protocol</h5>
+
+<div class="highlight highlight-source-objc"><pre>- (<span class="pl-k">void</span>)sendPressed:(UIButton *)sender withText:(<span class="pl-c1">NSString</span> *)text</pre></div>
+
+<ul>
+<li>Hook into your own backend here</li>
+<li>Call <code>[self finishSend]</code> at the end of this method to animate and reset the text input view</li>
+<li>Optionally play sound effects
+
+<ul>
+<li>For outgoing messages <code>[JSMessageSoundEffect playMessageSentSound]</code>
+</li>
+<li>For incoming messages <code>[JSMessageSoundEffect playMessageReceivedSound]</code>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="highlight highlight-source-objc"><pre>- (JSBubbleMessageType)messageTypeForRowAtIndexPath:(<span class="pl-c1">NSIndexPath</span> *)indexPath</pre></div>
+
+<ul>
+<li>
+<p>The type of bubble for this row, options are:</p>
+
+<ul>
+<li><code>JSBubbleMessageTypeIncoming</code></li>
+<li><code>JSBubbleMessageTypeOutgoing</code></li>
+</ul>
+</li>
+<li>
+<p>The type of Message for this row, options are:</p>
+
+<ul>
+<li><code>JSBubbleMediaTypeText</code></li>
+<li><code>JSBubbleMediaTypeImage</code></li>
+</ul>
+</li>
+</ul>
+
+<div class="highlight highlight-source-objc"><pre>- (JSBubbleMediaType)messageMediaTypeForRowAtIndexPath:(<span class="pl-c1">NSIndexPath</span> *)indexPath</pre></div>
+
+<ul>
+<li>The <a href="https://github.com/EvoRobin/ChatMessageTableViewController/tree/master/ScreenShot">style of the bubble</a> for this row, options are:
+
+<ul>
+<li><code>JSBubbleMessageStyleDefault</code></li>
+<li><code>JSBubbleMessageStyleSquare</code></li>
+<li><code>JSBubbleMessageStyleDefaultGreen</code></li>
+</ul>
+</li>
+</ul>
+
+<div class="highlight highlight-source-objc"><pre>- (JSMessagesViewTimestampPolicy)timestampPolicy</pre></div>
+
+<ul>
+<li>How/when to display timestamps for messages, options are:
+
+<ul>
+<li><code>JSMessagesViewTimestampPolicyAll</code></li>
+<li><code>JSMessagesViewTimestampPolicyAlternating</code></li>
+<li><code>JSMessagesViewTimestampPolicyEveryThree</code></li>
+<li><code>JSMessagesViewTimestampPolicyEveryFive</code></li>
+<li><code>JSMessagesViewTimestampPolicyCustom</code></li>
+</ul>
+</li>
+</ul>
+
+<div class="highlight highlight-source-objc"><pre>- (JSMessagesViewAvatarPolicy)avatarPolicy</pre></div>
+
+<ul>
+<li>How/when to display avatars, options are:
+
+<ul>
+<li><code>JSMessagesViewAvatarPolicyIncomingOnly</code></li>
+<li><code>JSMessagesViewAvatarPolicyBoth</code></li>
+<li><code>JSMessagesViewAvatarPolicyNone</code></li>
+</ul>
+</li>
+</ul>
+
+<div class="highlight highlight-source-objc"><pre>- (JSAvatarStyle)avatarStyle</pre></div>
+
+<ul>
+<li>The <a href="https://github.com/EvoRobin/ChatMessageTableViewController/tree/master/ScreenShot">style for the avatars</a>, options are:
+
+<ul>
+<li><code>JSAvatarStyleCircle</code></li>
+<li><code>JSAvatarStyleSquare</code></li>
+<li><code>JSAvatarStyleNone</code></li>
+</ul>
+</li>
+</ul>
+
+<div class="highlight highlight-source-objc"><pre>- (<span class="pl-k">BOOL</span>)hasTimestampForRowAtIndexPath:(<span class="pl-c1">NSIndexPath</span> *)indexPath</pre></div>
+
+<ul>
+<li>Returns if this row should display a timestamp or not</li>
+<li>Required only if using <code>JSMessagesViewTimestampPolicyCustom</code>
+</li>
+</ul>
+
+<h5>
+<a id="implement-the-jsmessagesviewdatasource-protocol" class="anchor" href="#implement-the-jsmessagesviewdatasource-protocol" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Implement the <code>JSMessagesViewDataSource</code> protocol</h5>
+
+<div class="highlight highlight-source-objc"><pre>- (<span class="pl-c1">NSString</span> *)textForRowAtIndexPath:(<span class="pl-c1">NSIndexPath</span> *)indexPath</pre></div>
+
+<ul>
+<li>The text to be displayed for this row</li>
+</ul>
+
+<div class="highlight highlight-source-objc"><pre>- (<span class="pl-c1">NSDate</span> *)timestampForRowAtIndexPath:(<span class="pl-c1">NSIndexPath</span> *)indexPath</pre></div>
+
+<ul>
+<li>The timestamp to be displayed <em>above</em> this row</li>
+</ul>
+
+<div class="highlight highlight-source-objc"><pre>- (UIImage *)avatarImageForIncomingMessage</pre></div>
+
+<ul>
+<li>The avatar image for incoming messages</li>
+</ul>
+
+<div class="highlight highlight-source-objc"><pre>- (UIImage *)avatarImageForOutgoingMessage</pre></div>
+
+<ul>
+<li>The avatar image for outgoing messages</li>
+</ul>
+
+<h5>
+<a id="implement-the-table-view-data-source-method-that-you-should-be-familiar-with" class="anchor" href="#implement-the-table-view-data-source-method-that-you-should-be-familiar-with" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Implement the <a href="http://developer.apple.com/library/ios/#documentation/uikit/reference/UITableViewDataSource_Protocol/Reference/Reference.html#//apple_ref/occ/intf/UITableViewDataSource">table view data source</a> method that you should be familiar with</h5>
+
+<div class="highlight highlight-source-objc"><pre>- (<span class="pl-k">NSInteger</span>)tableView:(UITableView *)tableView numberOfRowsInSection:(<span class="pl-k">NSInteger</span>)section</pre></div>
+
+<h5>
+<a id="customize" class="anchor" href="#customize" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Customize</h5>
+
+<ul>
+<li>For custom background color, use <code>- (void)setBackgroundColor:(UIColor *)color</code>
+</li>
+<li>For custom send button, override <code>- (UIButton *)sendButton</code>
+</li>
+</ul>
+
+<h5>
+<a id="notes" class="anchor" href="#notes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Notes</h5>
+
+<ul>
+<li>You may present view programmatically, or use Storyboards</li>
+<li>Your <code>JSMessagesViewController</code> subclass <strong>must</strong> be presented in a <code>UINavigationController</code>
+</li>
+</ul>
+
+<h5>
+<a id="demo-projects-included" class="anchor" href="#demo-projects-included" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Demo projects included</h5>
+
+<ul>
+<li>
+<code>MessagesDemo.xcodeproj</code> for example of programmatic presentation</li>
+<li>
+<code>MessagesDemoStoryboards/MessagesDemoSB.xcodeproj</code> for example of use with Storyboards</li>
+</ul>
+
+<h2>
+<a id="apps-using-this-control" class="anchor" href="#apps-using-this-control" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Apps Using This Control</h2>
+
+<p><a href="http://bit.ly/hemoglobeapp">Hemoglobe</a></p>
+
+<p><a href="https://itunes.apple.com/us/app/fourchat/id650833730?mt=8">FourChat</a></p>
+
+<p><a href="https://itunes.apple.com/us/app/libraries-for-developers/id653427112?mt=8">Libraries for developers</a>  </p>
+
+<p><a href="https://github.com/jessesquires/MessagesTableViewController">jessesquires 's MessagesTableViewController</a></p>
+
+<p><em><a href="mailto:1933549736@qq.com">Contact me</a> to have your app listed here.</em></p>
+
+<h2>
+<a id="related-projects" class="anchor" href="#related-projects" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Related Projects</h2>
+
+<p><a href="https://github.com/soffes/ssmessagesviewcontroller">SSMessagingViewController</a></p>
+
+<p><a href="https://github.com/acani/AcaniChat">AcaniChat</a></p>
+
+<h2>
+<a id="mit-license" class="anchor" href="#mit-license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="http://opensource.org/licenses/MIT">MIT License</a>
+</h2>
+
+<p>You are free to use this as you please. No attribution necessary. <strong>If you use this, please tell me about it!</strong></p>
+
+<p>Copyright © 2013 Robin</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/RobinChao/ChatMessageTableViewController">UIChatKit</a> is maintained by <a href="https://github.com/RobinChao">RobinChao</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
