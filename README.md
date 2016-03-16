@@ -3,9 +3,9 @@
 A messages UI for iPhone. ChatMessageTableViewController is like iMessage app. support text && image .
  
 
-![Messages Screenshot 1](./ScreenShot/IMG_0452.PNG =450x)
+![Messages Screenshot 1][img1]
 
-![Messages Screenshot 2](./ScreenShot/IMG_0453.PNG =450x)
+![Messages Screenshot 2][img2]
 
 This messages tableview controller is very similar to the one in the iOS Messages app. **Note, this is only a messaging UI, not a messaging app.** This is intended to be used in an existing app where you have (or are developing) a messaging system and need a user interface for it.
 
